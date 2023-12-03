@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import java.util.Optional;
 
@@ -55,4 +56,20 @@ public class UserDataService {
         // 만약 비밀번호가 일치하지 않는다면, BadCredentialsException을 던집니다.
         throw new BadCredentialsException("Credentials invalid");
     }
+
+    // 모든 사용자를 가져오는 메소드
+    public List<UserDataEntity> getAllUsers() {
+        return repository.findAll();
+    }
+
+    // 사용자 삭제 메소드
+    public boolean removeUser(String userId) {
+        Optional<UserDataEntity> userOpt = repository.findByUserId(userId);
+        if (userOpt.isPresent()) {
+            repository.delete(userOpt.get());
+            return true;
+        }
+        return false;
+    }
+
 }
