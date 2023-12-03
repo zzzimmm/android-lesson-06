@@ -8,6 +8,15 @@
         </ul>
     </body>
     <script>
-        // 이곳에 코드를 구현하십시오.
+        (async () => {
+            const response = await fetch('/api/v1/data/list'); 
+            const result = await response.json();
+            console.log(result);
+            for (let i = 0; i < result.length; i++) {
+                let li = document.createElement("li");
+                li.appendChild(document.createTextNode(result[i].text));
+                document.getElementById("dataList").appendChild(li);
+            }
+        })()
     </script>
 </html>
